@@ -1,0 +1,59 @@
+﻿@using Infra.Extensions
+@model IEnumerable<WebApp.Models.TransactionViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Listagem de Transações</h1>
+
+<p>
+    <a asp-action="Index" asp-controller="Extract">Importar Transações</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        Nenhuma transação cadastrada
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Valor
+                </th>
+                <th>
+                    Descrição
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatePosted)
+                    </td>
+                    <td>
+                        @item.Amount.FormatMoney()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Memo)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
